@@ -10,8 +10,9 @@
 // find=text, keys=a,b (key columns), rows=N (generate N rows instead of the files).
 import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const [leftFile = 'samples/customers-v1.csv', rightFile = 'samples/customers-v2.csv'] = process.argv.slice(2);
 const read = (f) => readFileSync(path.resolve(f), 'utf8');
 
