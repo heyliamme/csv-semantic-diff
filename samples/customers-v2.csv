@@ -1,0 +1,13 @@
+id,name,email,plan,seats,mrr,region,signed_up,updated_at,notes
+112,Omar Haddad,omar@example.com,team,10,1000,MA,2025-02-17,2025-10-01T09:30:00Z,upgraded
+101,Mai Tran,mai@example.com,pro,5,250,VN,2024-01-15,2025-10-01T09:30:00Z,
+102,Liam Nguyen,liam@example.com,team,12,1.2e3,VN,2024-02-03,2025-10-01T09:30:00Z,
+103,"Acme, Inc.",ops@acme.example,enterprise,300,15000,US,2023-11-20,2025-10-01T09:30:00Z,"renewal, +50 seats"
+104,Sofia Rossi,sofia@example.com,free,1,0,IT,2024-05-09,2025-10-01T09:30:00Z,
+106,"Lee ""LJ"" Park",lj@example.com,team,8,800,KR,2024-07-14,2025-10-01T09:30:00Z,
+107,Amara Okafor,amara@example.com,pro,2,100,NG,2024-08-01,2025-10-01T09:30:00Z,
+108,Noah Schmidt,noah.schmidt@example.com,pro,2,100,DE,2024-09-12,2025-10-01T09:30:00Z,
+109,Priya Patel,priya@example.com,team,6,600,IN,2024-10-05,2025-10-01T09:30:00Z,
+110,Lucas Silva,lucas@example.com,pro,4,200,BR,2024-11-22,2025-10-01T09:30:00Z,
+111,Emma Dubois,emma@example.com,free,1,0,FR,2025-01-08,2025-10-01T09:30:00Z,
+113,Hana Kim,hana@example.com,pro,3,150,KR,2025-09-20,2025-10-01T09:30:00Z,new

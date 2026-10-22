@@ -1,0 +1,380 @@
+{
+  "name": "csv-semantic-diff",
+  "displayName": "CSV Semantic Diff",
+  "description": "Compare two CSV or TSV files by meaning: rows are matched by key column, so sorting, column order, quoting and number spelling are not changes. Added, removed, changed and moved rows, renamed columns, cell-level old → new.",
+  "version": "0.1.0",
+  "publisher": "heyliam",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#10161f",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heyliamme/csv-semantic-diff"
+  },
+  "bugs": {
+    "url": "https://github.com/heyliamme/csv-semantic-diff/issues"
+  },
+  "homepage": "https://github.com/heyliamme/csv-semantic-diff#readme",
+  "qna": "https://github.com/heyliamme/csv-semantic-diff/issues",
+  "pricing": "Free",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Visualization",
+    "Data Science",
+    "Other"
+  ],
+  "keywords": [
+    "csv",
+    "tsv",
+    "diff",
+    "compare",
+    "semantic diff",
+    "csv diff",
+    "csv compare",
+    "table diff",
+    "keyed diff",
+    "daff",
+    "side by side"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onWebviewPanel:csvSemanticDiff"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "restrictedConfigurations": [
+        "csvSemanticDiff.keyColumns",
+        "csvSemanticDiff.keysByFile",
+        "csvSemanticDiff.ignoreColumns",
+        "csvSemanticDiff.normalizeNumbers",
+        "csvSemanticDiff.thousandsSeparators",
+        "csvSemanticDiff.trimWhitespace",
+        "csvSemanticDiff.ignoreCase",
+        "csvSemanticDiff.emptyEqualsMissing",
+        "csvSemanticDiff.ignoreRowOrder"
+      ],
+      "description": "In Restricted Mode, comparison settings from the workspace (keys, ignored columns, normalisation) are not applied, so a repository can't hide its own differences. Comparing with Git revisions needs a trusted workspace."
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "csvSemanticDiff.new",
+        "title": "New CSV Comparison",
+        "category": "CSV Semantic Diff",
+        "icon": {
+          "light": "media/title-light.svg",
+          "dark": "media/title-dark.svg"
+        }
+      },
+      {
+        "command": "csvSemanticDiff.compareSelected",
+        "title": "Compare as CSV",
+        "category": "CSV Semantic Diff"
+      },
+      {
+        "command": "csvSemanticDiff.selectForCompare",
+        "title": "Select for CSV Compare",
+        "category": "CSV Semantic Diff"
+      },
+      {
+        "command": "csvSemanticDiff.compareWithSelected",
+        "title": "Compare as CSV with Selected",
+        "category": "CSV Semantic Diff"
+      },
+      {
+        "command": "csvSemanticDiff.compareWithClipboard",
+        "title": "Compare with Clipboard",
+        "category": "CSV Semantic Diff"
+      },
+      {
+        "command": "csvSemanticDiff.compareWith",
+        "title": "Compare with…",
+        "category": "CSV Semantic Diff"
+      },
+      {
+        "command": "csvSemanticDiff.compareWithHead",
+        "title": "Compare with HEAD",
+        "category": "CSV Semantic Diff"
+      },
+      {
+        "command": "csvSemanticDiff.compareWithRef",
+        "title": "Compare with Git Revision…",
+        "category": "CSV Semantic Diff"
+      },
+      {
+        "command": "csvSemanticDiff.fromDiffEditor",
+        "title": "Open Diff Semantically",
+        "category": "CSV Semantic Diff",
+        "icon": {
+          "light": "media/title-light.svg",
+          "dark": "media/title-dark.svg"
+        }
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "csvSemanticDiff.compareWith",
+        "key": "ctrl+k c",
+        "mac": "cmd+k c",
+        "when": "!terminalFocus && !isInDiffEditor && (editorLangId =~ /^(csv|tsv|csv \\(semicolon\\)|csv \\(pipe\\)|dynamic csv)$/ || resourceExtname =~ /^\\.(csv|tsv|tab|psv)$/i)"
+      },
+      {
+        "command": "csvSemanticDiff.fromDiffEditor",
+        "key": "ctrl+k c",
+        "mac": "cmd+k c",
+        "when": "!terminalFocus && isInDiffEditor && (editorLangId =~ /^(csv|tsv|csv \\(semicolon\\)|csv \\(pipe\\)|dynamic csv)$/ || resourceExtname =~ /^\\.(csv|tsv|tab|psv)$/i)"
+      },
+      {
+        "command": "csvSemanticDiff.compareWithClipboard",
+        "key": "ctrl+k shift+c",
+        "mac": "cmd+k shift+c",
+        "when": "!terminalFocus && !isInDiffEditor"
+      },
+      {
+        "command": "csvSemanticDiff.new",
+        "key": "ctrl+k alt+c",
+        "mac": "cmd+k alt+c",
+        "when": "!terminalFocus"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "csvSemanticDiff.editorContext",
+        "label": "CSV Semantic Diff"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "csvSemanticDiff.compareSelected",
+          "when": "false"
+        },
+        {
+          "command": "csvSemanticDiff.selectForCompare",
+          "when": "editorIsOpen && activeEditor != 'WebviewEditor'"
+        },
+        {
+          "command": "csvSemanticDiff.compareWithSelected",
+          "when": "csvSemanticDiff.hasSelection && editorIsOpen && activeEditor != 'WebviewEditor'"
+        },
+        {
+          "command": "csvSemanticDiff.compareWithClipboard",
+          "when": "editorIsOpen && activeEditor != 'WebviewEditor'"
+        },
+        {
+          "command": "csvSemanticDiff.compareWith",
+          "when": "editorIsOpen && activeEditor != 'WebviewEditor'"
+        },
+        {
+          "command": "csvSemanticDiff.compareWithHead",
+          "when": "editorIsOpen && activeEditor != 'WebviewEditor' && resourceScheme == file"
+        },
+        {
+          "command": "csvSemanticDiff.compareWithRef",
+          "when": "editorIsOpen && activeEditor != 'WebviewEditor' && resourceScheme == file"
+        },
+        {
+          "command": "csvSemanticDiff.fromDiffEditor",
+          "when": "isInDiffEditor"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "csvSemanticDiff.compareSelected",
+          "when": "listMultiSelection && !explorerResourceIsFolder && resourceExtname =~ /^\\.(csv|tsv|tab|psv|txt)$/i",
+          "group": "3_compare@30"
+        },
+        {
+          "command": "csvSemanticDiff.selectForCompare",
+          "when": "!listMultiSelection && !explorerResourceIsFolder && resourceExtname =~ /^\\.(csv|tsv|tab|psv|txt)$/i",
+          "group": "3_compare@31"
+        },
+        {
+          "command": "csvSemanticDiff.compareWithSelected",
+          "when": "!listMultiSelection && !explorerResourceIsFolder && csvSemanticDiff.hasSelection",
+          "group": "3_compare@32"
+        }
+      ],
+      "editor/context": [
+        {
+          "submenu": "csvSemanticDiff.editorContext",
+          "when": "editorLangId =~ /^(csv|tsv|csv \\(semicolon\\)|csv \\(pipe\\)|dynamic csv)$/ || resourceExtname =~ /^\\.(csv|tsv|tab|psv)$/i || (editorHasSelection && editorLangId =~ /^(plaintext|log|markdown)$/)",
+          "group": "3_compare@10"
+        }
+      ],
+      "csvSemanticDiff.editorContext": [
+        {
+          "command": "csvSemanticDiff.compareWithClipboard",
+          "group": "1@1"
+        },
+        {
+          "command": "csvSemanticDiff.compareWith",
+          "group": "1@2"
+        },
+        {
+          "command": "csvSemanticDiff.compareWithHead",
+          "when": "resourceScheme == file",
+          "group": "1@3"
+        },
+        {
+          "command": "csvSemanticDiff.compareWithRef",
+          "when": "resourceScheme == file",
+          "group": "1@4"
+        },
+        {
+          "command": "csvSemanticDiff.selectForCompare",
+          "group": "2@1"
+        },
+        {
+          "command": "csvSemanticDiff.compareWithSelected",
+          "when": "csvSemanticDiff.hasSelection",
+          "group": "2@2"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "csvSemanticDiff.fromDiffEditor",
+          "when": "isInDiffEditor && (resourceLangId =~ /^(csv|tsv)/ || resourceExtname =~ /^\\.(csv|tsv|tab|psv)$/i)",
+          "group": "navigation@-10"
+        },
+        {
+          "command": "csvSemanticDiff.new",
+          "when": "!isInDiffEditor && config.csvSemanticDiff.showTitleButton && (resourceLangId =~ /^(csv|tsv|csv \\(semicolon\\)|csv \\(pipe\\)|dynamic csv)$/ || resourceExtname =~ /^\\.(csv|tsv|tab|psv)$/i || activeWebviewPanelId == 'csvSemanticDiff')",
+          "group": "navigation@100"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CSV Semantic Diff",
+      "properties": {
+        "csvSemanticDiff.keyColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "id",
+            "ID",
+            "_id",
+            "uuid",
+            "key",
+            "code",
+            "sku",
+            "email",
+            "name"
+          ],
+          "markdownDescription": "Column names that identify a row, tried in order (case-insensitive). The first one that exists on both sides, is never empty and is unique on each side becomes the key. Join names with `+` for a composite key, such as `country+city`. When none applies, any unique column is tried, then pairs of columns, then rows are aligned by content.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.keysByFile": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "default": {},
+          "markdownDescription": "Key columns for files whose name matches a pattern, such as `{\"orders*.csv\": [\"order_id\", \"line\"]}`. `*` matches anything and `?` one character; the pattern is matched against the file name. The view's **Save key for files like…** writes here.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.ignoreColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Columns whose differences are shown dimmed and not counted, by name (`*` matches anything), such as `updated_at` or `*_ts`.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.normalizeNumbers": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Compare numbers by value: `1.0`, `1` and `1e0` are equal. Values with leading zeros such as `007` are kept as text.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.thousandsSeparators": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Read `1,000` as the number 1000 (also `1 000`). Only meaningful with number normalisation on.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.trimWhitespace": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Ignore whitespace at the start and end of a cell.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.ignoreCase": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Compare text without regard to case.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.emptyEqualsMissing": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "An empty cell equals a missing one (a short row, or a column the other side doesn't have).",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.ignoreRowOrder": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Don't report rows that only changed place. Can also be switched per comparison.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.changesOnly": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Start with unchanged rows hidden.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.view": {
+          "type": "string",
+          "enum": [
+            "unified",
+            "sideBySide"
+          ],
+          "enumDescriptions": [
+            "One table; a changed cell shows old → new.",
+            "The left and right tables next to each other, rows aligned."
+          ],
+          "default": "unified",
+          "markdownDescription": "How a comparison opens. Can be switched in the view.",
+          "scope": "resource"
+        },
+        "csvSemanticDiff.showTitleButton": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Show a button in the editor title bar that opens an empty comparison to paste two tables into."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "node scripts/build.mjs && node --test test/*.test.mjs",
+    "icon": "node scripts/icon.mjs",
+    "package": "node scripts/build.mjs --prod && vsce package --no-dependencies",
+    "test:e2e": "npm run package && node test/e2e/run.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/vscode": "^1.90.0",
+    "@vscode/codicons": "0.0.36",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "ovsx": "^1.3.0",
+    "typescript": "^7.0.2"
+  }
+}

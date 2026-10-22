@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect x="8" y="8" width="240" height="240" rx="56" fill="#f3eee4"/>
+  <!-- a table: frame, header band, three rows -->
+  <g fill="none" stroke="#24304a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="44" y="52" width="168" height="152" rx="14"/>
+    <line x1="44" y1="92" x2="212" y2="92"/>
+  </g>
+  <rect x="50" y="58" width="156" height="30" rx="8" fill="#24304a"/>
+  <!-- one row matched in place, two that swapped places -->
+  <g stroke-width="11" stroke-linecap="round" fill="none">
+    <line x1="92" y1="118" x2="164" y2="118" stroke="#24304a"/>
+    <path d="M92 150 C128 150 128 184 164 184" stroke="#e8735a"/>
+    <path d="M92 184 C128 184 128 150 164 150" stroke="#2a9d8f"/>
+  </g>
+  <circle cx="90" cy="118" r="12" fill="#24304a"/>
+  <circle cx="166" cy="118" r="12" fill="#24304a"/>
+  <circle cx="90" cy="150" r="12" fill="#e8735a"/>
+  <circle cx="166" cy="184" r="12" fill="#e8735a"/>
+  <circle cx="90" cy="184" r="12" fill="#2a9d8f"/>
+  <circle cx="166" cy="150" r="12" fill="#2a9d8f"/>
+</svg>
